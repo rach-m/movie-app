@@ -22,16 +22,9 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 
-function writeListData(listId, userId, name, movie_id) {
-    firebase.database().ref('lists/' + listId).set({
-      userId: userId,
-      name: name,
-      movie_id : movie_id
-    });
-    console.log("done")
-  }
 
-  writeListData(1234, 1234, "favorites", 12345)
+
+//   writeListData(1234, 1234, "favorites", 12345)
 
   module.exports = {
     database
