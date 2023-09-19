@@ -12,6 +12,9 @@ jobs:
       - run: cd client && npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
+          entrypoint: "./client"
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MOVIE_APP_76A3D }}'
           projectId: movie-app-76a3d
+        env:
+            FIREBASE_CLI_EXPERIMENTS: webframeworks
