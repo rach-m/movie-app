@@ -1,15 +1,21 @@
-const database = require("../db")
+const database = require("../db");
+const uniqid = require("uniqid");
+const firebase = require("firebase");
 
 function getUserLists(userId, listId){
-
+    return firebase.database().ref('lists/').get()
 }
 
-function createUserList(listId, userId, name) {
-   return firebase.database().ref('lists/' + listId).set({
-      userId: userId,
+// getUserLists()
+
+function createUserList(name) {
+   return firebase.database().ref('lists/' + uniqid()).set({
+      userId: uniqid(),
       name: name
     });
   }
+
+  createUserList("watch later")
 
 function writeToUserList(listId, movieId){
 
@@ -21,4 +27,9 @@ function deleteFromUserList(listId, movieId){
 
 function deleteUserList(listId){
 
+}
+
+module.exports = {
+    getUserLists,
+    createUserList
 }
