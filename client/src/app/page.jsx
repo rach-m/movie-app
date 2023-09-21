@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState} from 'react';
-import Login from './login.jsx';
 import Logout from "./Logout.jsx"
+import Login from "./Login.jsx"
 import axios from "axios"
 import MovieCard from './MovieCard.jsx';
 
