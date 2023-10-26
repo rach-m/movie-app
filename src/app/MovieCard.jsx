@@ -107,8 +107,16 @@ function MovieCard({ movie, userInfo, page }) {
     setPopEl(false);
     setAnchorEl(false);
   }
+  console.log(lists);
   return (
-    <Card sx={{ maxWidth: 275, padding: "15px", margin: "10px" }}>
+    <Card
+      sx={{
+        maxWidth: 275,
+        padding: "15px",
+        margin: "10px",
+        textAlign: "center",
+      }}
+    >
       <div
         style={{
           display: "flex",
@@ -117,7 +125,7 @@ function MovieCard({ movie, userInfo, page }) {
         }}
       >
         <h3>{movie.original_title}</h3>
-        {page === "main" ? (
+        {page === "main" && userInfo ? (
           <div>
             <IconButton onClick={handleClick} aria-label="add to list">
               <AddIcon />
@@ -165,6 +173,7 @@ function MovieCard({ movie, userInfo, page }) {
           </div>
         ) : null}
       </div>
+      <img src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`}></img>
       <h5>
         {movie.genre_ids.map((genre, index) => {
           return <div key={index}>{genres[genre]}</div>;
