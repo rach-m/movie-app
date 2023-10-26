@@ -1,9 +1,11 @@
-import {initializeApp} from "firebase/app";
-import {GoogleAuthProvider,
- getAuth,
- signInWithPopup,
-
- signOut,} from 'firebase/auth';
+import { initializeApp } from "firebase/app";
+import {
+  GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBElnw-clXXwntk-8fzxVOSihF47zWZ-_s",
@@ -16,18 +18,16 @@ const firebaseConfig = {
   databaseURL: "https://movie-app-76a3d-default-rtdb.firebaseio.com/",
 };
 
-
 const app = initializeApp(firebaseConfig);
-
+const db = getDatabase(app);
 const auth = getAuth(app);
 
 const googleProvider = new GoogleAuthProvider();
 const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
-   return res.user
-    }
-  catch (err) {
+    return res.user;
+  } catch (err) {
     console.error(err);
     alert(err.message);
   }
@@ -37,9 +37,4 @@ const logout = () => {
   signOut(auth);
 };
 
-
-export{
-  auth,
-  signInWithGoogle,
-  logout,
-}
+export { auth, signInWithGoogle, logout, db };

@@ -1,4 +1,15 @@
 {
+  "hosting": {
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "frameworksBackend": {
+      "region": "us-east1"
+    }
+  },
   "functions": [
     {
       "source": "functions",
@@ -13,18 +24,5 @@
         "npm --prefix \"$RESOURCE_DIR\" run lint"
       ]
     }
-  ],
-  "hosting": {
-    "site": "movie-app-backend-9bbbc",
-    "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-   "rewrites": [{
-     "source":"**",
-     "function":"app"
-      }]
-  }
+  ]
 }

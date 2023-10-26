@@ -2,34 +2,70 @@ const database = require("../db");
 const uniqid = require("uniqid");
 const firebase = require("firebase");
 
-function getUserLists(userId, listId){
-    return firebase.database().ref('lists/').get()
-}
 
-// getUserLists()
-
-function createUserList(name) {
-   return firebase.database().ref('lists/' + uniqid()).set({
-      userId: uniqid(),
-      name: name
+function createUserList(name, userId) {
+  const listId = uniqid();
+  firebase
+    .database()
+    .ref("lists/" + listId)
+    .set({
+      userId: userId,
+      name: name,
+      movies: [],
     });
-  }
 
-  createUserList("watch later")
-
-function writeToUserList(listId, movieId){
-
+  firebase
+    .database()
+    .ref("users/" + userId)
+    .set({
+      lists: [listId],
+    });
 }
 
-function deleteFromUserList(listId, movieId){
+// createUserList("watch later", "LEMFtseq29NQze8znU98E0RkoA93");
 
+
+
+async function deleteFromUserList(listId, movieId) {
+  // find list and movie on list
+  const value = await firebase
+    .database()
+    .ref()
+    .child("lists/")
+    .child(listId)
+    .get();
+
+  // delete movie from list id
+  const list = value.val();
+  const index = list.movies.indexOf(movieId);
+  delete list.movies[index];
 }
 
-function deleteUserList(listId){
+async function deleteUserList(listId, userId) {
+  const lists = await firebase
+    .database()
+    .ref()
+    .child("lists/")
+    .child(listId)
+    .remove();
 
+  const userLists = await firebase
+    .database()
+    .ref()
+    .child("user/")
+    .child(userId)
+    .get();
+  const values = userLists.val();
+  let index = values.lists.indexOf(listId);
+  delete values.lists[index];
+
+  console.log("deleted");
 }
 
 module.exports = {
-    getUserLists,
-    createUserList
-}
+  getUserLists,
+  createUserList,
+  deleteFromUserList,
+  deleteUserList,
+  writeToUserList,
+};
